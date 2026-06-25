@@ -44,6 +44,7 @@ post_album(){
     --retry-delay 7 \
     -F "source=@${FRMENV_FRAME_LOCATION}/frame_${1}.jpg" \
     -F "message=${message}" \
+    -o /dev/null \
     "${FRMENV_API_ORIGIN}/${FRMENV_FBAPI_VER}/${album}/photos?access_token=${FRMENV_FBTOKEN}&published=1"
 }
 
