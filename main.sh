@@ -94,11 +94,10 @@ fi
 # Refer to config.conf
 message="$(eval "printf '%s' \"$(sed -E 's_\{\\n\}_\n_g;s_(\{[^\x7d]*\})_\$\1_g' <<< "${message}"\")")"
 
-if [[ -n "${album}" ]]; then
-  post_id="$(post_album "${prev_frame}" | grep -Po '(?=[0-9])(.*)(?=\",\")')" || failed "${prev_frame}" "${episode}"
-else
-  post_id="$(post_fp "${prev_frame}" | grep -Po '(?=[0-9])(.*)(?=\",\")')" || failed "${prev_frame}" "${episode}"
-fi
+post_id="$(post_fp "${prev_frame}" | grep -Po '(?=[0-9])(.*)(?=\",\")')" || failed "${prev_frame}" "${episode}"
+
+# Post images in Albums
+[[ -z "${album}" ]] || post_album "${prev_frame}"
 
 # Addons, Random Crop from frame
 if [[ "${rand_post}" = "1" ]]; then
